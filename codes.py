@@ -1,20 +1,34 @@
 #блочная сортировка
-def bucket_sort(arr): #Определяется количество корзин
+import random
+
+def bucket_sort(arr):
     if len(arr) == 0:
         return arr
     bucket_count = 10
     min_value = min(arr)
     max_value = max(arr)
     buckets = [[] for _ in range(bucket_count)]
-    # Каждый элемент помещается в корзину согласно функции распределения
-    for i in arr:
-        index = int((i - min_value) / (max_value - min_value + 1) * bucket_count)
-        buckets[index].append(i)
-    # Содержимое каждой корзины сортируется индивидуально
+    
+    # Распределяем элементы по корзинам
+    for num in arr:
+        index = int((num - min_value) / (max_value - min_value + 1e-9) * bucket_count)
+        if index == bucket_count:
+            index -= 1
+        buckets[index].append(num)
+    
+    # Сортируем каждую корзину и объединяем
     result = []
-    for bucket in buckets: #Корзины соединяются в порядке увеличения диапазона
+    for bucket in buckets:
         result += sorted(bucket)
     return result
+
+# Генерация входных данных: 20 случайных чисел в диапазоне [0, 1)
+data = [random.random() for _ in range(20)]
+print("Входные данные:", data)
+
+# Сортировка и вывод результата
+sorted_data = bucket_sort(data)
+print("Отсортированные данные:", sorted_data)
 
 
 #блинная сортировка

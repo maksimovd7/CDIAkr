@@ -128,21 +128,7 @@ print(f"Элемент {target} найден на индексе:", index)
 
 
 #Экспоненциальный поиск
-def exponential_search(arr, x):
-    n = len(arr)
-    if n == 0:
-        return -1
-    if arr[0] == x:
-        return 0
-    # Находим диапазон, где может находиться элемент
-    i = 1
-    while i < n and arr[i] <= x:
-        i *= 2
-    # Если элемент не найден, диапазон увеличивается экспоненциально: 1, 2, 4, 8, 16 и т.д., пока не будет найден элемент, больше или равный искомому
-    left = i // 2
-    right = min(i, n-1)
-    return binary_search(arr, x, left, right)
-def binary_search(arr, x, left, right): #На найденном диапазоне выполняется бинарный поиск
+def binary_search(arr, x, left, right):
     while left <= right:
         mid = left + (right - left) // 2
         if arr[mid] == x:
@@ -153,6 +139,26 @@ def binary_search(arr, x, left, right): #На найденном диапазо�
             right = mid - 1
     return -1
 
+def exponential_search(arr, x):
+    if len(arr) == 0:
+        return -1
+    if arr[0] == x:
+        return 0
+    index = 1
+    while index < len(arr) and arr[index] <= x:
+        index *= 2
+    return binary_search(arr, x, index // 2, min(index, len(arr) - 1))
+
+# Входные данные: массив отсортированных чисел
+data = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512]
+# Искомый элемент
+target = 128
+print("Массив:", data)
+print("Ищем:", target)
+
+# Запуск алгоритма
+result_index = exponential_search(data, target)
+print("Индекс найденного элемента:", result_index)
 
 
 #Тернарный поиск

@@ -162,24 +162,43 @@ print("Индекс найденного элемента:", result_index)
 
 
 #Тернарный поиск
-def ternary_search(arr, x, left, right):
-    if right >= left:
-        # Делим массив на три части
-        mid1 = left + (right - left) // 3
-        mid2 = right - (right - left) // 3
-        #Сравнивается искомый элемент с элементами на двух разделительных границах
-        if arr[mid1] == x:
-            return mid1
-        if arr[mid2] == x:
-            return mid2
-        #Если совпадение не найдено, алгоритм повторяется рекурсивно в одной из трети массива, где может находиться искомое значение
-        if x < arr[mid1]:
-            return ternary_search(arr, x, left, mid1 - 1)
-        elif x > arr[mid2]:
-            return ternary_search(arr, x, mid2 + 1, right)
+import random
+
+# Генерация тестовых данных: отсортированный список из 30 случайных чисел в диапазоне от -50 до 50
+data = sorted([random.randint(-50, 50) for _ in range(30)])
+
+print("Входные данные для тернарного поиска:", data)
+
+# Для демонстрации поиска можно выбрать, например, индекс равный 0 или последний
+target = data[0]
+print("Ищем элемент:", target)
+
+# Реализация тернарного поиска (поиск минимума на отсортированном массиве)
+def ternary_search(arr, x):
+    left, right = 0, len(arr) - 1
+    while right - left > 2:
+        m1 = left + (right - left) // 3
+        m2 = right - (right - left) // 3
+        if arr[m1] == x:
+            return m1
+        if arr[m2] == x:
+            return m2
+        if arr[m1] > x:
+            right = m1 - 1
+        elif arr[m2] < x:
+            left = m2 + 1
         else:
-            return ternary_search(arr, x, mid1 + 1, mid2 - 1)
+            left = m1 + 1
+            right = m2 - 1
+    # Линейный поиск для оставшихся элементов
+    for i in range(left, right + 1):
+        if arr[i] == x:
+            return i
     return -1
+
+# Запускаем поиск
+index_found = ternary_search(data, target)
+print("Индекс найденного элемента:", index_found)
 
 
 

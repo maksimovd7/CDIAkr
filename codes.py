@@ -93,21 +93,37 @@ print("Отсортированные данные бусинами сортир
 
 #Поиск скачками
 import math
+import random
+
 def jump_search(arr, x):
     n = len(arr)
-    step = int(math.sqrt(n))  # размер прыжка
+    step = int(math.sqrt(n))
     prev = 0
-    # Алгоритм прыгает вперёд на m элементов, пока не найдёт элемент, больше или равный искомому
+
+    # Находим блок, где может находиться элемент
     while prev < n and arr[min(step, n) - 1] < x:
         prev = step
         step += int(math.sqrt(n))
         if prev >= n:
             return -1
-    # Если найденный элемент больше искомого, выполняется линейный поиск в предыдущем блоке
+
+    # Линейный поиск в блоке
     for i in range(prev, min(step, n)):
         if arr[i] == x:
             return i
     return -1
+
+# Генерация тестовых данных: отсортированный список из 30 уникальных случайных чисел от 1 до 100
+data = sorted(random.sample(range(1, 101), 30))
+print("Отсортированные входные данные:", data)
+
+# Элемент для поиска
+target = data[random.randint(0, len(data)-1)]
+print("Искомый элемент:", target)
+
+# Запуск поиска
+index = jump_search(data, target)
+print(f"Элемент {target} найден на индексе:", index)
 
 
 

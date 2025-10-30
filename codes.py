@@ -25,7 +25,6 @@ def flip(arr, k):
         arr[start], arr[k] = arr[k], arr[start]
         start += 1
         k -= 1
-
 def pancake_sort(arr):
     n = len(arr)
     for curr_size in range(n, 1, -1):

@@ -32,22 +32,35 @@ print("Отсортированные данные:", sorted_data)
 
 
 #блинная сортировка
+import random
+
 def flip(arr, k):
-    #Переворачиваем подмассив от начала до позиции максимального элемента, чтобы этот элемент оказался первым
+    # Переворачиваем первые k элементов массива
     start = 0
     while start < k:
         arr[start], arr[k] = arr[k], arr[start]
         start += 1
         k -= 1
+
 def pancake_sort(arr):
     n = len(arr)
     for curr_size in range(n, 1, -1):
+        # Находим индекс максимального элемента в неотсортированной части
         mi = arr.index(max(arr[:curr_size]))
-        # Переворачиваем весь подмассив, чтобы максимальный элемент оказался в конце
-        if mi != curr_size-1:#Повторяем процесс для оставшейся неотсортированной части массива
+        # Если максимальный элемент не в правильной позиции, переворачиваем
+        if mi != curr_size - 1:
             flip(arr, mi)
-            flip(arr, curr_size-1)
+            flip(arr, curr_size - 1)
     return arr
+
+# Генерация входных данных: 15 случайных целых чисел от 1 до 100
+pancake_data = [random.randint(1, 100) for _ in range(15)]
+print("Входные данные для блинной сортировки:", pancake_data)
+
+# Сортировка и вывод результата
+sorted_pancake = pancake_sort(pancake_data.copy())
+print("Отсортированные данные блинной сортировкой:", sorted_pancake)
+
 
 
 

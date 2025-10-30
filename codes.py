@@ -65,23 +65,31 @@ print("Отсортированные данные блинной сортиро
 
 
 #Сортировка бусинами(гравитационная)
-def bead_sort(arr): #Каждый элемент массива представляется в виде горизонтального ряда бусин, количество которых соответствует его значению
-    import numpy as np
+import numpy as np
+import random
+
+def bead_sort(arr):
     if any(type(x) != int or x < 0 for x in arr):
         raise ValueError("Bead sort работает только с неотрицательными целыми числами")
     max_elem = max(arr)
-    beads = np.zeros((len(arr), max_elem), dtype=bool) #Бусины располагаются на «стержнях»
+    beads = np.zeros((len(arr), max_elem), dtype=bool)
     for i, val in enumerate(arr):
         beads[i, :val] = True
-    for j in range(max_elem): #Под действием «гравитации» бусины падают вниз
+    for j in range(max_elem):
         sum_ = beads[:, j].sum()
         beads[:, j] = False
         beads[-sum_:, j] = True
-    for i in range(len(arr)): #После оседания бусин строки считываются сверху вниз — получается отсортированный массив
+    for i in range(len(arr)):
         arr[i] = beads[i].sum()
     return arr
 
+# Генерация входных данных: 15 случайных неотрицательных целых чисел от 0 до 50
+bead_data = [random.randint(0, 50) for _ in range(15)]
+print("Входные данные для сортировки бусинами:", bead_data)
 
+# Сортировка и вывод результата
+sorted_bead = bead_sort(bead_data.copy())
+print("Отсортированные данные бусинами сортировкой:", sorted_bead)
 
 #Поиск скачками
 import math
